@@ -1,0 +1,15 @@
+PRINT-*
+Errfile-*
+hotfiles_channel.dat-*
+swaninit
+norm_end
+info.txt
+INPUT
+*.out
+*.err
+*.nc
+buoy_output_*
+buoy_spectra_*
+output_NONSTAT*
+output_STAT*
+'~'
