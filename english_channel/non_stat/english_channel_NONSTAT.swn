@@ -6,10 +6,10 @@ COORDinates SPHERICAL CCM
 CGRID REGULAR -2.700000 49.100000 0 4.491726 1.800000 215 87 CIRCLE MDC=72 FLOW=0.02 FHIGH=1.0 MSC=48
 
 INPGRID BOTTOM REGULAR -2.700000 49.100000 0 1077 431 0.004167 0.004167 EXC -32767
-READINP BOTTOM -1 'bathymetry_channel.bot' 1 0 FREE
+READINP BOTTOM -1 'bathymetry.bot' 1 0 FREE
 
 INPgrid WIND REGULAR XPINP=-2.700000 ypinp=49.100000 alpinp=0 mxinp=15 myinp=9 dxinp=0.36 dyinp=0.36 NONSTATIONARY tbeginp=20250101.000000 deltinp=1 HR tendinp=20250105.230000
-READINP WIND fac=1 'wind_NONSTAT.wnd' idla=2 nhedf=0 nhedt=1 nhedvec=0 FREE
+READINP WIND fac=1 'wind_2025.wnd' idla=2 nhedf=0 nhedt=1 nhedvec=0 FREE
 
 BOUNDSPEC SIDE EAST CLOCKWISE VARIABLE FILE 0.0  'east_NONSTAT.dat'  1 &
                                             0.25 ''               2 &
