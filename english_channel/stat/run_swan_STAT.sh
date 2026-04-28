@@ -2,7 +2,7 @@
 #SBATCH -J english_channel_STAT
 #SBATCH -p nodes
 #SBATCH -N 1
-#SBATCH -n 160
+#SBATCH -n 64
 #SBATCH -t 02:00:00
 #SBATCH -o ~/scratch/swan/runs/english_channel/stat/swan_STAT_%j.out
 #SBATCH -e ~/scratch/swan/runs/english_channel/stat/swan_STAT_%j.err
