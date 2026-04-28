@@ -1,0 +1,7 @@
+Name: English Chanel 
+Coordinate box: -2.746582, 49.073267, 1.73584, 50.833586
+
+COORDS = {"Location1": [-5.5, 48.5, 2.5, 51.5]}
+
+START = "2025-01-01"
+END = "2025-01-05"

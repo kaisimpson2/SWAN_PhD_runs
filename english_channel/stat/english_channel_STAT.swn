@@ -1,0 +1,67 @@
+PROJECT 'English_Channel' '01'
+SET maxerr=2 NAUTICAL pwtail=4
+MODE STAT TWODimensional
+COORDinates SPHERICAL CCM
+
+CGRID REGULAR -2.700000 49.100000 0 4.491726 1.800000 215 87 CIRCLE MDC=72 FLOW=0.02 FHIGH=1.0 MSC=48
+
+INPGRID BOTTOM REGULAR -2.800000 49.000000 0 1102 456 0.004167 0.004167 EXC -32767
+READINP BOTTOM -1 'bathymetry.bot' 1 0 FREE
+
+INPgrid WIND REGULAR XPINP=-5.500000 ypinp=48.500000 alpinp=0 mxinp=15 myinp=9 dxinp=0.36 dyinp=0.36 EXC -9999
+READINP WIND fac=1 'wind_2025.wnd' idla=2 nhedf=0 FREE
+
+BOUNDSPEC SIDE EAST CLOCKWISE VARIABLE FILE 0.0  'east_STAT.dat'  1 &
+                                            0.25 ''               2 &
+                                            0.50 ''               3 &
+                                            0.75 ''               4 &
+                                            1.00 ''               5 &
+                                            1.25 ''               6 &
+                                            1.50 ''               7 &
+                                            1.76 ''               8 &
+
+BOUNDSPEC SIDE WEST CCW VARIABLE FILE 0.0  'west_STAT.dat'  1 &
+                                           0.25 ''           2 &
+                                           0.50 ''           3 &
+                                           0.75 ''           4 &
+                                           1.00 ''           5 &
+                                           1.25 ''           6 &
+                                           1.50 ''           7 &
+                                           1.76 ''           8 &
+
+BOUNDSPEC SIDE SOUTH CCW VARIABLE FILE 0.0  'south_STAT.dat'  1 &
+                                            0.50 ''            2 &
+                                            1.00 ''            3 &
+                                            1.50 ''            4 &
+                                            2.00 ''            5 &
+                                            2.50 ''            6 &
+                                            3.00 ''            7 &
+                                            3.50 ''            8 &
+                                            4.00 ''            9 &
+                                            4.49 ''           10 &
+
+BOUNDSPEC SIDE NORTH CLOCKWISE VARIABLE FILE 0.0  'north_STAT.dat'  1 &
+                                                  0.50 ''            2 &
+                                                  1.00 ''            3 &
+                                                  1.50 ''            4 &
+                                                  2.00 ''            5 &
+                                                  2.50 ''            6 &
+                                                  3.00 ''            7 &
+                                                  3.50 ''            8 &
+                                                  4.00 ''            9 &
+                                                  4.49 ''           10 &
+
+GEN3 KOMEN
+FRICtion JONSWAP=0.038
+BREAKING BKD
+WCAP KOMEN cds2=0.000024 stpm=0.00302 powst=2 delta=1
+SSWELL
+DIFFRACTION
+TRIAD
+QUAD iquad=4
+
+NUMERIC STOPC dabs=0.005 drel=0.01 curvat=0.005 npnts=90 STAT mxitst=1500
+
+COMPute STAT 20250101.000000
+HOTFILE 'hotfiles_channel.dat' FREE
+STOP

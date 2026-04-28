@@ -1,0 +1,81 @@
+PROJECT 'English_Channel' '01'
+SET maxerr=2 NAUTICAL pwtail=4
+MODE NONSTAT TWODimensional
+COORDinates SPHERICAL CCM
+
+CGRID REGULAR -2.700000 49.100000 0 4.491726 1.800000 215 87 CIRCLE MDC=72 FLOW=0.02 FHIGH=1.0 MSC=48
+
+INPGRID BOTTOM REGULAR -2.700000 49.100000 0 1077 431 0.004167 0.004167 EXC -32767
+READINP BOTTOM -1 'bathymetry_channel.bot' 1 0 FREE
+
+INPgrid WIND REGULAR XPINP=-2.700000 ypinp=49.100000 alpinp=0 mxinp=15 myinp=9 dxinp=0.36 dyinp=0.36 NONSTATIONARY tbeginp=20250101.000000 deltinp=1 HR tendinp=20250105.230000
+READINP WIND fac=1 'wind_NONSTAT.wnd' idla=2 nhedf=0 nhedt=1 nhedvec=0 FREE
+
+BOUNDSPEC SIDE EAST CLOCKWISE VARIABLE FILE 0.0  'east_NONSTAT.dat'  1 &
+                                            0.25 ''               2 &
+                                            0.50 ''               3 &
+                                            0.75 ''               4 &
+                                            1.00 ''               5 &
+                                            1.25 ''               6 &
+                                            1.50 ''               7 &
+                                            1.76 ''               8 &
+
+BOUNDSPEC SIDE WEST CCW VARIABLE FILE 0.0  'west_NONSTAT.dat'  1 &
+                                           0.25 ''           2 &
+                                           0.50 ''           3 &
+                                           0.75 ''           4 &
+                                           1.00 ''           5 &
+                                           1.25 ''           6 &
+                                           1.50 ''           7 &
+                                           1.76 ''           8 &
+
+BOUNDSPEC SIDE SOUTH CCW VARIABLE FILE 0.0  'south_NONSTAT.dat'  1 &
+                                            0.50 ''            2 &
+                                            1.00 ''            3 &
+                                            1.50 ''            4 &
+                                            2.00 ''            5 &
+                                            2.50 ''            6 &
+                                            3.00 ''            7 &
+                                            3.50 ''            8 &
+                                            4.00 ''            9 &
+                                            4.49 ''           10 &
+
+BOUNDSPEC SIDE NORTH CLOCKWISE VARIABLE FILE 0.0  'north_NONSTAT.dat'  1 &
+                                                  0.50 ''            2 &
+                                                  1.00 ''            3 &
+                                                  1.50 ''            4 &
+                                                  2.00 ''            5 &
+                                                  2.50 ''            6 &
+                                                  3.00 ''            7 &
+                                                  3.50 ''            8 &
+                                                  4.00 ''            9 &
+                                                  4.49 ''           10 &
+
+INITIAL HOTSTART MULTIPLE 'hotfiles_channel.dat' FREE
+
+GEN3 KOMEN
+FRICtion JONSWAP=0.038
+BREAKING BKD
+WCAP KOMEN cds2=0.000024 stpm=0.00302 powst=2 delta=1
+SSWELL
+DIFFRACTION
+TRIAD
+QUAD iquad=4
+
+NUMERIC STOPC dabs=0.005 drel=0.01 curvat=0.005 npnts=90 NONSTAT mxitns=1500
+
+NUMeric DIRimpl cdd=0.5 &
+NUMeric SIGIMpl css=0.5 outp=3
+
+POINTS 'Buoydata' FILE 'buoylocations.txt' OUTPUT OPTIONS '%' TABLE 12 & SPEC 8
+
+TABLE 'Buoydata' HEADER 'buoy_output_NONSTAT.txt' TIME XP YP DEP HSIGN HSWELL TPS TM01 TMM10 TM02 RTP PDIR DIR WIND DSPR QP VEL STEEPNESS &
+                                                   OUTPUT tbegtbl=20250101.000000 delttbl=1 HR
+
+BLOCK 'COMPGRID' NOHEADER 'output_NONSTAT.nc' LAY-OUT 1 HSIGN HSWELL TPS TM01 TMM10 TM02 RTP DEP BOTLEV DIR DSPR WIND PDIR VEL &
+                                               OUTPUT tbegtbl=20250101.000000 delttbl=1 HR
+
+TABLE 'COMPGRID' HEADER 'output_NONSTAT.txt' QP STEEPNESS PROPA GENE GENW OUTPUT tbegtbl=20250101.000000 delttbl=1 HR
+
+COMPute NONSTAT tbegc=20250101.000000 deltc=1 HR tendc=20250105.230000
+STOP
